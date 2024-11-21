@@ -4,7 +4,13 @@ import Image from "next/image";
 import Item from "@/app/Items/item";
 import {CardDescription, CardTitle} from "@/components/ui/card";
 
-const Page = async ({ params }: { params: { id?: string } }) => {
+type itemPageParams = {
+    params: Promise <{
+        id: string
+    }>
+}
+
+const Page = async ({params} : itemPageParams) => {
     const { id } = await params; // Await the params object
     // Fetch the item data
     const response = await fetch(`https://fakestoreapi.com/products/${id}`);
