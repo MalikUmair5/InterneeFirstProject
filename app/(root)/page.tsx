@@ -1,11 +1,5 @@
-import Image from "next/image";
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {ItemDataType} from "@/lib/definitations"
-import Link from "next/link";
-import {Copyright, ShoppingCartIcon} from "lucide-react";
 import Item from "@/app/Items/item";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 
 export default async function Home() {
    let itemsData: ItemDataType[] = [];
@@ -19,8 +13,9 @@ export default async function Home() {
             <section >
                 <h1 className={"heading"}>List of Products</h1>
                 <div className={"flex justify-center flex-wrap gap-5"}>
-                {itemsData && itemsData.map((item, index) => (
+                {itemsData && itemsData.map((item) => (
                     <Item
+                        key={item.id}
                         id={item.id}
                         title={item.title}
                         price={item.price}
