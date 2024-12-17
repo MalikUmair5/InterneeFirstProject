@@ -10,6 +10,8 @@ type itemPageParams = {
   }>;
 };
 
+export const revalidate = 3600;
+
 
 export async function generateStaticParams() {
   const res = await fetch("https://fakestoreapi.com/products");
