@@ -56,7 +56,7 @@ const Page = async ({ params }: itemPageParams) => {
       </section>
       <section>
         <p className={"heading !mt-10"}>More from {item.category}</p>
-        <div className={"flex flex-wrap gap-5"}>
+        <div className={"flex flex-wrap gap-5 justify-center"}>
           {relatedItems.map((item: ItemDataType) => (
             <Item
               id={item.id}

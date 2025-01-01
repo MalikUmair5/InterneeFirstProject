@@ -7,26 +7,28 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "@/public/logo.png";
 import Image from "next/image";
 import { ShoppingCart } from "lucide-react";
-
+import Link from "next/link";
+import { signIn, signOut } from "@/auth";
+import { auth } from "@/auth";
 
 interface NavigationItem {
-    name: string;
-    href: string;
-    current: boolean;
+  name: string;
+  href: string;
+  current: boolean;
 }
 
 const navigation: NavigationItem[] = [
-    { name: "Home", href: "/", current: true },
-    { name: "About", href: "#", current: false },
-    { name: "Contact", href: "#", current: false },
-    { name: "Products", href: "#", current: false },
+  { name: "Home", href: "/", current: false },
+  { name: "About", href: "/about", current: false },
+  { name: "Contact", href: "/contact", current: false },
 ];
 
 function classNames(...classes: (string | boolean | undefined)[]): string {
-    return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(" ");
 }
 
-export default function Header() {
+export default async function Header() {
+  const session = await auth();
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -46,23 +48,22 @@ export default function Header() {
               />
             </DisclosureButton>
           </div>
-          <div className="flex shrink-0 items-center hidden sm:block">
-              <Image
-                className={"h-8 w-auto"}
-                src={logo}
-                alt={"logo"}
-                height={100}
-                width={100}
-              />
-            </div>
+          <div className="shrink-0 items-center hidden sm:flex">
+            <Image
+              className={"h-8 w-auto"}
+              src={logo}
+              alt={"logo"}
+              height={100}
+              width={100}
+            />
+          </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-center">
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
                     href={item.href}
-                    aria-current={item.current ? "page" : undefined}
                     className={classNames(
                       item.current
                         ? "bg-gray-900 text-white"
@@ -71,7 +72,7 @@ export default function Header() {
                     )}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -81,10 +82,31 @@ export default function Header() {
               type="button"
               className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
             >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
               <ShoppingCart className="size-6" />
             </button>
+            {session?.user ? (
+              <form
+                action={async () => {
+                  "use server";
+                  await signOut();
+                }}
+              >
+                <button type="submit" className="ml-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium">
+                  Sign out
+                </button>
+              </form>
+            ) : (
+              <form
+                action={async () => {
+                  "use server";
+                  await signIn();
+                }}
+              >
+                <button type="submit" className="ml-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium">
+                  Sign In
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>
@@ -94,9 +116,8 @@ export default function Header() {
           {navigation.map((item) => (
             <DisclosureButton
               key={item.name}
-              as="a"
+              as={Link}
               href={item.href}
-              aria-current={item.current ? "page" : undefined}
               className={classNames(
                 item.current
                   ? "bg-gray-900 text-white"
