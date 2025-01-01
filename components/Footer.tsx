@@ -1,13 +1,17 @@
-import React from 'react'
-import {Copyright} from "lucide-react";
+import React from "react";
+import { Disclosure } from "@headlessui/react";
+import { Copyright } from "lucide-react";
 
 const Footer = () => {
-    return (
-        <footer
-            className="flex gap-5 justify-center items-center bg-gradient-to-r from-[#020024] via-[rgba(182,0,253,0.74)] to-[#00d4ff] text-white mt-5 p-5">
-            <Copyright className={"size-10"}/>
-            <h1 className={"text-4xl"}> Internee.pk</h1>
-        </footer>
-    )
-}
-export default Footer
+  return (
+    <Disclosure as="nav" className="bg-gray-800">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="relative flex h-16 items-center justify-between text-white">
+          <Copyright />
+          <p>All Rights reserved</p>
+        </div>
+      </div>
+    </Disclosure>
+  );
+};
+export default Footer;

@@ -12,16 +12,16 @@ const Item = ({id, title, image }:ItemDataType) => {
     const handleClick = (id: number) =>{
         router.push(`/Items/${id}`);
     }
-
     return (
         <Card className={"w-[276px] cursor-pointer"} key={id} onClick={() => handleClick(id)}>
             <CardHeader>
-                <Image className={"self-center w-auto h-[150px]"} src={image} alt={title} height={100} width={100} placeholder='blur'/>
+                <Image className={"self-center w-auto h-[150px]"} src={image} alt={title} height={100} width={100}/>
             </CardHeader>
             <CardContent>
                 <CardTitle>{title}</CardTitle>
             </CardContent>
         </Card>
+        
     )
 }
 export default Item

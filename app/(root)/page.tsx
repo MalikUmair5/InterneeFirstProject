@@ -14,8 +14,7 @@ export default async function Home() {
   return (
     <>
       <section>
-        {Date.now()}
-        <h1 className={"heading"}>List of Products</h1>
+        <h1 className={"heading mt-10"}>List of Products</h1>
         <div className={"flex justify-center flex-wrap gap-5"}>
           {itemsData &&
             itemsData.map((item) => (
